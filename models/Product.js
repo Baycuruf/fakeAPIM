@@ -32,7 +32,8 @@ const Product = sequelize.define('Product', {
     defaultValue: { rate: 0, count: 0 }
   }
 }, {
-  timestamps: false // createdAt ve updatedAt alanlarını istemiyorsanız
+  tableName: 'products', // PostgreSQL'de küçük harf ve çoğul isim kullanın
+  timestamps: false
 });
 
 module.exports = Product;
