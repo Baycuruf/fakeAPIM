@@ -1,10 +1,25 @@
 // controllers/productsController.js
 const Product = require('../models/Product');
+const sequelize = require('../db'); // db.js dosyanızın yolunu doğru verdiğinizden emin olun
+
 
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll();
     res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+// Kategori seçeneği için 
+exports.getProductCategories = async (req, res) => {
+  try {
+    const products = await Product.findAll();
+    
+    // Tüm ürünlerden kategorileri çıkarıp tekilleştirme
+    const categories = [...new Set(products.map(product => product.category))];
+    
+    res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -57,5 +72,20 @@ exports.deleteProduct = async (req, res) => {
     throw new Error('Ürün bulunamadı');
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getProductCategoriesWithCount = async (req, res) => {
+  try {
+    const result = await Product.findAll({
+      attributes: [
+        'category',
+        [sequelize.fn('COUNT', sequelize.col('id')), 'count']
+      ],
+      group: ['category']
+    });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
