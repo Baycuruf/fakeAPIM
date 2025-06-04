@@ -1,10 +1,9 @@
-// db.js
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './database.sqlite',
-  logging: false // Gerektiğinde true yapabilirsiniz
+  storage: '/tmp/database.sqlite', // Render'da geçici depolama kullanın
+  logging: false
 });
 
 module.exports = sequelize;
