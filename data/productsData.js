@@ -6,7 +6,7 @@ let products = [
     price: 109.95,
     description: "Perfect backpack for hiking",
     category: "men's clothing",
-    image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    image: "",
     rating: { rate: 3.9, count: 120 }
   },
    {

@@ -4,11 +4,15 @@ const router = express.Router();
 const {
   getAllProducts,
   getProductById,
-  // Diğer fonksiyonlar...
+  createProduct,
+  updateProduct,
+  deleteProduct
 } = require('../controllers/productsController');
 
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
-// Diğer route'lar...
+router.post('/', createProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
 
 module.exports = router;
