@@ -32,7 +32,7 @@ const Product = sequelize.define('Product', {
     defaultValue: { rate: 0, count: 0 }
   }
 }, {
-  tableName: 'products', // PostgreSQL'de küçük harf ve çoğul isim kullanın
+  tableName: 'Products', // PostgreSQL'de küçük harf ve çoğul isim kullanın
   timestamps: false
 });
 

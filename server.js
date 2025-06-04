@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const productsRouter = require('./routes/products');
 const sequelize = require('./db');
+const Product = require('./models/Product');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,6 +41,29 @@ app.get('/test-db', async (req, res) => {
     res.json({ status: 'Veritabanı bağlantısı başarılı' });
   } catch (error) {
     res.status(500).json({ status: 'Veritabanı bağlantı hatası', error: error.message });
+  }
+});
+
+// Veritabanı bağlantısını ve tabloyu kontrol et
+sequelize.authenticate()
+  .then(() => {
+    console.log('SQLite bağlantısı başarılı.');
+    return sequelize.sync(); // Tabloyu senkronize et (force: true kullanmadan)
+  })
+  .then(() => {
+    console.log('Tablo kontrol edildi:', Product.tableName);
+  })
+  .catch(err => {
+    console.error('Veritabanı hatası:', err);
+  });
+
+  // Geçici bir route ekleyin (server.js içinde)
+app.get('/check-db', async (req, res) => {
+  try {
+    const tables = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table'");
+    res.json(tables);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
